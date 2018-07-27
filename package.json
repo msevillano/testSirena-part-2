@@ -1,0 +1,16 @@
+{
+  "name": "sirena-app-1",
+  "description": "API that allow to create, modify, get, delete the entity movie",
+  "version": "1.0.0-SNAPSHOT",
+  "repository": "https://github.com/msevillano/testSirena",
+  "bugs": "https://github.com/msevillano/testSirena/issues",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "app": "node ./src/app.js",
+    "test": "mocha --exit"
+  },
+  "engines": {
+    "node": ">= 10.0.0"
+  }
+}
