@@ -1,0 +1,25 @@
+service: testSitena-part-2
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  environment:
+    SERVERIP: 'SERVERADDR:PORT'
+
+functions:
+  cronOnStart:
+    handler: handler.onStart
+    events:
+    - schedule: rate(on start)
+  cronIncreaseViewers:
+    handler: handler.increaseViewers
+    events:
+    - schedule: rate(1 minute)
+  cronGenerateStats:
+    handler: handler.generateStats
+    events:
+    - schedule: rate(10 minute)
+  cronChangeMovies:
+    handler: handler.changeMovies
+    events:
+    - schedule: cron(0/30 * ? * MON-FRI *)
