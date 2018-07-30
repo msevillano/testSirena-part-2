@@ -2,6 +2,9 @@ const request = require('request');
 
 const SERVER_IP = process.env.SERVERIP;
 
+/**
+ * Changes the movies that are actually on the DB for 10 new movies
+ */
 module.exports.changeMovies = async () => {
     try {
         let movies = JSON.parse(await getMovies(SERVER_IP + '/movies'));
@@ -15,7 +18,9 @@ module.exports.changeMovies = async () => {
         console.error(err);
     }
 };
-
+/**
+ * Increases the amount of viewers of a random movie by 1
+ */
 module.exports.increaseViewers = async () => {
     try {
         let movies = JSON.parse(await getMovies(SERVER_IP + '/movies'));
@@ -27,7 +32,11 @@ module.exports.increaseViewers = async () => {
         console.error(err);
     }
 };
-
+/**
+ * Gets the top 5 mos tiewed movies
+ *
+ * @returns [Movie]
+ */
 module.exports.generateStats = async () => {
 
     try {
@@ -42,6 +51,13 @@ module.exports.generateStats = async () => {
     }
 };
 
+/**
+ * Gets all the movies from the DB
+ * @param   {string} url of the CRUD api
+ *
+ * @returns [Movie] if found
+ * @throws {err} in case of error while retrieving
+ */
 function getMovies (url) {
     return new Promise((resolve, reject) => {
         request(url, (err, res, body) => {
@@ -53,7 +69,13 @@ function getMovies (url) {
         });
     });
 }
-
+/**
+ * Persist a random movie into the DB
+ * @param   {string} url of the CRUD api
+ * @param   {Movie} newMovie to persist on the DB
+ *
+ * @throws {err} in case of error while retrieving
+ */
 function addRandomMovie (url, newMovie) {
     return new Promise((resolve, reject) => {
         request({url: url,
@@ -68,12 +90,18 @@ function addRandomMovie (url, newMovie) {
         });
     });
 }
-
-function updateMovie (url, newMovie) {
+/**
+ * Gets all the movies from the DB
+ * @param   {string} url of the CRUD api
+ * @param   {Movie} movie to update on the DB
+ *
+ * @throws {err} in case of error while retrieving
+ */
+function updateMovie (url, movie) {
     return new Promise((resolve, reject) => {
-        request({url: url + newMovie.title,
+        request({url: url + movie.title,
             method: 'PUT',
-            json: newMovie
+            json: movie
         },(err, res) =>  {
             if (!err && res.statusCode === 200) {
                 resolve();
@@ -83,7 +111,13 @@ function updateMovie (url, newMovie) {
         });
     });
 }
-
+/**
+ * Removes a movie from the DB
+ * @param   {string} url of the CRUD api
+ * @param   {string} title title of the movie to delete on the DB
+ *
+ * @throws {err} in case of error while retrieving
+ */
 function deleteMovie(url, title) {
     return new Promise((resolve, reject) => {
         request({url: url + title,
@@ -97,7 +131,11 @@ function deleteMovie(url, title) {
         });
     });
 }
-
+/**
+ * Generates a random movie
+ *
+ * @returns {Movie}
+ */
 function generateRandomMovie() {
     return {
         "title": Math.random().toString(36).replace(/[^a-z]+/g, ''),
