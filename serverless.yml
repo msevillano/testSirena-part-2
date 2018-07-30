@@ -4,11 +4,11 @@ provider:
   name: aws
   runtime: nodejs6.10
   environment:
-    SERVERIP: 'SERVERADDR:PORT'
+    SERVERIP: 'http://localhost:3000'
 
 functions:
   cronOnStart:
-    handler: handler.onStart
+    handler: handler.changeMovies
     events:
     - schedule: rate(on start)
   cronIncreaseViewers:

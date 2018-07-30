@@ -4,7 +4,6 @@
   "description": "Movie Handler",
   "main": "handler.js",
   "dependencies": {
-
     "request": "^2.87.0"
   },
   "devDependencies": {
